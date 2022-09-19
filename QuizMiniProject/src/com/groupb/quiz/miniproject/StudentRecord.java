@@ -27,8 +27,7 @@ public class StudentRecord {
 		}
 		return grade;
 	}
-	public void setStudentMarks(int count, int studentOption) {
-		studentOption =2;
+	public void setStudentMarks(int count, String studentOption) {
 		String grade = calculateGrade(count);
 		try {
 			con = connectionTest.getConnectionDetails();
@@ -36,7 +35,7 @@ public class StudentRecord {
 			ps = con.prepareStatement("UPDATE student SET score = ?, grade = ? WHERE studentId = ?;");
 			ps.setInt(1, count);
 			ps.setString(2, grade);
-			ps.setInt(3, studentOption);
+			ps.setString(3, studentOption);
 			int i = ps.executeUpdate();
 			System.out.println("Record inserted successfully"+i);
 			con.close();

@@ -6,14 +6,20 @@ public class AdminStudent {
 	String chooseOption;
 	Scanner scan = new Scanner(System.in);
 	MCQQuestions question = new MCQQuestions();
+	Admin admin = new Admin();
 	
 	public String getUserOption() {
 		try {
 			do {
 				System.out.println("Please enter a option: \n1. Admin\n2. Student ");
 				chooseOption = scan.nextLine();
-				if(chooseOption.equals("1") || chooseOption.equals("2")) {
-					question.displayQuestions();
+				if(chooseOption.equals("1")) {
+					System.out.println("Hi Admin");
+					break;
+				}
+				if(chooseOption.equals("2")) {
+					admin.getStudentOption();
+					//question.displayQuestions();
 					break;
 				}
 				else {

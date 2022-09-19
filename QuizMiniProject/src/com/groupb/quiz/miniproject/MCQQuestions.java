@@ -14,18 +14,18 @@ public class MCQQuestions {
 	String option3;
 	String option4;
 	String correctAnswer;
-	int count=0;
-	char option;
-	
+	int count;
+	int studentOption = 1;
+	//char option;
+	String option;
 	Scanner scan = new Scanner(System.in);
 	ConnectionTest connectionTest = new ConnectionTest();
 	MCQScore mcqScore = new MCQScore();
 	Connection con = null;
 	PreparedStatement ps = null;
-	ResultSet rs = null;
-	
-	public char getDetails(int quesID, String question, String option1, String option2, String option3, String option4, String correctAnswer) {
-		//char option = this.option;
+	ResultSet rs = null;	
+	StudentRecord record = new StudentRecord();
+	public String getDetails(int quesID, String question, String option1, String option2, String option3, String option4) {
 		do {
 			try {
 				System.out.println(question);
@@ -33,38 +33,28 @@ public class MCQQuestions {
 				System.out.println("b. "+option2);
 				System.out.println("c. "+option3);
 				System.out.println("d. "+option4);
-				
 				System.out.println("Choose option between a/b/c/d : ");
-				option = scan.next().charAt(0);	
-				//System.out.println("hi 1");
-				if(option == 'a' || option == 'b' || option == 'c' || option == 'd') {
-					//System.out.println("hi 2");
-				//	System.out.println("Option = "+option);
-					//System.out.println("Questionid : "+quesID);
+				//option = scan.next().charAt(0);	
+				option = scan.nextLine();
+				if(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d")) {
 					count = mcqScore.getScore(option, quesID);
 					break;
 				}
 				else {
-					//System.out.println("hi3");
 					throw new InvalidOptionException("Please enter correct option");
 				}
 			} catch (InvalidOptionException e) {
 				System.err.println(e);
 			}
-			}while(option != 'a' || option != 'b' || option != 'c' || option != 'd');
-
-		
+			}while(!(option.equals("a")) || !(option.equals("b")) || !(option.equals("c")) || !(option.equals("d")));
 		return option;
 	}
-	
-	public void displayQuestions() {
-		
+	public void displayQuestions(String studentOption) {
 		try {
 			con = connectionTest.getConnectionDetails();
 			//select query
 			ps = con.prepareStatement("select * from mcq");
 			rs = ps.executeQuery();
-			
 			while(rs.next()) {
 					question = rs.getString(2);
 					option1 = rs.getString(3);
@@ -73,25 +63,17 @@ public class MCQQuestions {
 					option4 = rs.getString(6);
 					quesID = rs.getInt(1);
 					correctAnswer = rs.getString(7);
-					getDetails(quesID, question, option1, option2, option3, option4, correctAnswer);
-					//while (option != 'a' || option != 'b' || option != 'c' || option != 'd') {
-						//getDetails(quesID, question, option1, option2, option3, option4, correctAnswer);
-					//}
-//					do {
-//						System.out.println("hi");
-//						getDetails(quesID, question, option1, option2, option3, option4, correctAnswer);
-//					}while (option != 'a' || option != 'b' || option != 'c' || option != 'd');		
+					getDetails(quesID, question, option1, option2, option3, option4);
 			}
 			System.out.println("Correct Answer : "+correctAnswer);
 			System.out.println();
-
 			con.close();
 			ps.close();
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}	
 		System.out.println("Total score obtained : "+count);
+		record.setStudentMarks(count, studentOption);
 	}
 }
