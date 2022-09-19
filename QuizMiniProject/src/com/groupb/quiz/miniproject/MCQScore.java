@@ -21,7 +21,20 @@ public class MCQScore {
 				}
 				else if(quesID == 6 && option.equals("d")) {
 					count++;	
-			}
+				}
+				else if(quesID == 7 && option.equals("c")) {
+					count++;
+				}
+				else if(quesID ==8 && option.equals("a")) {
+					count++;
+				}
+				else if(quesID ==9 && option.equals("a")) {
+					count++;
+				}
+				else if(quesID ==10 && option.equals("b")) {
+					count++;
+				}
+					
 			return count;
 	}
 }
