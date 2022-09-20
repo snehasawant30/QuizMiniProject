@@ -1,25 +1,20 @@
 package com.groupb.quiz.miniproject;
-
-import java.util.Scanner;
+//Main Class
 
 public class QuizImpl {
-	int student = 2;
-	int admin = 1;
-
+	
 	public static void main(String[] args) {
 		
-		
 		AdminStudent adminStudent = new AdminStudent();
-		Admin admin = new Admin();
 		
-		String chooseOption = adminStudent.getUserOption();
+		String chooseOption = adminStudent.getUserOption();    //call method to get two options between admin and student
 		do { 
-			if(chooseOption.equals("1") || chooseOption.equals("1")) {
+			System.out.println("Choose Option === "+chooseOption);
+			if(chooseOption.equals("1") || chooseOption.equals("2")) {
 				break;
 			}
 			else
-				chooseOption = adminStudent.getUserOption();
+				chooseOption = adminStudent.getUserOption();	////call method to get two options between admin and student
 		}while(!(chooseOption.equals("1"))|| !(chooseOption.equals("2")));
-		
 	}
 }
