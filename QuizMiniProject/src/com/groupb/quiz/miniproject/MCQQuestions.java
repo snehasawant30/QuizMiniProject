@@ -65,7 +65,7 @@ public class MCQQuestions {
 					correctAnswer = rs.getString(7);
 					getDetails(quesID, question, option1, option2, option3, option4);
 			}
-			System.out.println("Correct Answer : "+correctAnswer);
+			//System.out.println("Correct Answer : "+correctAnswer);
 			System.out.println();
 			con.close();
 			ps.close();
@@ -73,7 +73,7 @@ public class MCQQuestions {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-		System.out.println("Total score obtained : "+count);
+		//System.out.println("Total score obtained : "+count);
 		record.setStudentMarks(count, studentOption);
 	}
 }
