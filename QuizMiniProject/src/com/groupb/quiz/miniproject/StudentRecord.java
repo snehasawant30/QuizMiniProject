@@ -1,6 +1,6 @@
 
 package com.groupb.quiz.miniproject;
-
+//class for calculating grade and marks of the student and fetching data from student table
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,8 @@ public class StudentRecord {
 	String fetchOption;
 	QuizImpl quizImpl = new QuizImpl();
 	Scanner scan = new Scanner(System.in);
-	//int studentOption = 4;
+	
+	/*calculateGrade() will get the marks as parameter and based upon the marks the grade for the student is calculated and returned to the calling method.*/
 	public String calculateGrade(int count) {
 		if(count > 8 && count <=10) {
 			grade = "A";
@@ -33,12 +34,13 @@ public class StudentRecord {
 		return grade;
 	}
 	
+	/*getStudentRecord() will get studentOption i.e. the id of the student who is appearing for the exam. based upon
+	 * the studentID the data is fetched from the student table.*/
 	public String getStudentRecord(String studentOption) {
 		try {
 			
 			do {
 				con = connectionTest.getConnectionDetails();
-				//select query
 				String sql = "SELECT * FROM student where studentid=?";
 				ps = con.prepareStatement(sql);
 				ps.setString(1, studentOption);
@@ -53,30 +55,28 @@ public class StudentRecord {
 									System.out.println(+rs.getInt(1)+"\t\t"+rs.getString(2)+"		"+rs.getInt(3)+"	"+rs.getString(4));
 								}
 								System.out.println("Thank You. Have a Nice Day");
-								//System.exit(i);
 								break;
 						}
 						else if (fetchOption.equals("no")){
 							System.out.println("\nThank You. Have a Nice Day\n");
 							break;	
 						}
-					
 					}
 					else 
 						throw new InvalidOptionException("Please enter value as yes/no ");	
 				}
 				catch(InvalidOptionException e) {
 					System.err.println(e);
-				}
-				
-				}while(!(fetchOption.equals("yes")) || !(fetchOption.equals("no")));
-		
+				}	
+			}while(!(fetchOption.equals("yes")) || !(fetchOption.equals("no")));
 		} catch(Exception e) {
 			System.err.println(e);
 		}
 			return fetchOption;
 	}
 	
+	/*setStudentMarks() will update the record in the student table in the database. the score and grade 
+	 * of the particular student are updated based upon the studentID i.e studentOption selected by the user. */
 	public void setStudentMarks(int count, String studentOption) {
 		String grade = calculateGrade(count);
 		try {
@@ -87,22 +87,17 @@ public class StudentRecord {
 			ps.setString(2, grade);
 			ps.setString(3, studentOption);
 			int i = ps.executeUpdate();
-			System.out.println("Record inserted successfully"+i);
-			
-//			System.out.println("Do you want to view your score? Press yes/no");
 			con.close();
 			ps.close();
 			fetchOption=getStudentRecord(studentOption);
 			do { 
-				if(!(fetchOption.equals("yes")) || !(fetchOption.equals("no"))) {
-					System.out.println("HIIIIII");
-					fetchOption = getStudentRecord(studentOption);
+				if((fetchOption.equals("yes")) || (fetchOption.equals("no"))) {
 					System.exit(i);
 				}
 				else
+					fetchOption = getStudentRecord(studentOption);
 					System.exit(i);
-					//break;
-			}while((fetchOption.equals("yes")) || (fetchOption.equals("no")));
+			}while(!(fetchOption.equals("yes")) || !(fetchOption.equals("no")));
 			System.exit(i);
 		}catch(Exception e) {
 			System.err.println(e);
