@@ -9,7 +9,6 @@ public class QuizImpl {
 		
 		String chooseOption = adminStudent.getUserOption();    //call method to get two options between admin and student
 		do { 
-			System.out.println("Choose Option === "+chooseOption);
 			if(chooseOption.equals("1") || chooseOption.equals("2")) {
 				break;
 			}
