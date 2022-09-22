@@ -1,7 +1,10 @@
 package com.groupb.quiz.miniproject;
-
+//class to calculate the marks obtained by the student
 public class MCQScore {
 	int count = 0;
+	
+	/*getScore() is used to calculate the marks. question id and selected option of particular question is passsed here in parameters.
+	 * based on that the method will check the condition and marks are stored in variable count. this count is returned to the calling method.*/
 	public int getScore(String option, int quesID){
 			
 				if(quesID == 1 && option.equals("a")) {
